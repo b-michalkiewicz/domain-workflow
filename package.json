@@ -1,6 +1,6 @@
 {
     "name": "domain-workflow",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "author": "Bartosz Michalkiewicz <bmichalkiewicz@gmail.com>",
     "description": "explicit workflows with error handling made easy",
     "main": "dist/index.js",
@@ -20,7 +20,9 @@
         "lint": "eslint \"src/**/*.ts\" --max-warnings=0",
         "test": "jest"
     },
-    "dependencies": {},
+    "dependencies": {
+        "exceptionout": "^0.0.6"
+    },
     "devDependencies": {
         "@types/jest": "^26.0.22",
         "@typescript-eslint/eslint-plugin": "^4.18.0",
