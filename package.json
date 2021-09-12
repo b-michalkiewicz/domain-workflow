@@ -1,0 +1,34 @@
+{
+    "name": "domain-workflow",
+    "version": "0.0.1",
+    "author": "Bartosz Michalkiewicz <bmichalkiewicz@gmail.com>",
+    "description": "explicit workflows with error handling made easy",
+    "main": "dist/index.js",
+    "typings": "dist/index.d.ts",
+    "repository": "https://github.com/b-michalkiewicz/domain-workflow",
+    "license": "MIT",
+    "keywords": [
+        "ddd",
+        "domain driven development",
+        "workflow",
+        "error handling",
+        "functional programming",
+        "typescript"
+    ],
+    "scripts": {
+        "build": "npm run lint && tsc",
+        "lint": "eslint \"src/**/*.ts\" --max-warnings=0",
+        "test": "jest"
+    },
+    "dependencies": {},
+    "devDependencies": {
+        "@types/jest": "^26.0.22",
+        "@typescript-eslint/eslint-plugin": "^4.18.0",
+        "@typescript-eslint/parser": "^4.18.0",
+        "eslint-plugin-import": "^2.22.1",
+        "eslint": "^7.22.0",
+        "jest": "^26.6.3",
+        "ts-jest": "^26.5.5",
+        "typescript": "^4.4.2"
+    }
+}
