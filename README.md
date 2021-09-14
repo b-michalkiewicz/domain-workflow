@@ -26,5 +26,3 @@ const fancyWorkflowResult = runWorkflow(fancyWorkflow)("42");
 // fancyWorkflowResult is type is Either<ParseStringToNumberError, string> as parsing string into number can fail
 ```
 Don't need to worry if the previous step is an async operation or can fail all of these are handled automatically so you can focus on writing your stages in separation.
-
-See [here](./src/example.ts) for more references.
