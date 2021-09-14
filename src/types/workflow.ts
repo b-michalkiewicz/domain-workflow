@@ -1,43 +1,43 @@
 import { Either } from "exceptionout";
-import {
-    EitherOpRight,
-    EitherOpsLefts,
-    Equal,
-    First,
-    HasAsyncOp,
-    HasEitherOp,
-    Last,
-    OneElementList,
-    PromiseLikeArg,
-    Second,
-    Tail,
-    TwoOrMoreElementsList,
-} from "./generic";
+import { HasAsyncOperation } from "./async";
+import { Equal, UnwrapSuccessType } from "./common";
+import { EitherOperationLefts, EitherOperationRight, HasEitherOperation } from "./either";
+import { First, Last, List, OneElementList, Second, Tail, TwoOrMoreElementsList } from "./list";
 
 export type Stage<Input = any, Output = any> = (input: Input) => Output;
-export type Stages = ReadonlyArray<Stage>;
-export type StageInput<S extends Stage = any> = First<Parameters<S>>;
+export type StageList = List<Stage>;
+export type StageInput<TStage extends Stage> = First<Parameters<TStage>>;
 
-export type Workflow<S extends Stages> = HasAsyncOp<S> extends true ? never : HasValidStages<S> extends true ? S : never;
-export type AsyncWorkflow<S extends Stages> = HasAsyncOp<S> extends true ? (HasValidStages<S> extends true ? S : never) : never;
-
-export type WorkflowOutput<S extends Stages> = HasAsyncOp<S> extends true
+export type Workflow<Stages extends StageList> = HasAsyncOperation<Stages> extends true
     ? never
-    : HasEitherOp<S> extends true
-    ? Either<EitherOpsLefts<S>, ReturnType<Last<S>>>
-    : ReturnType<Last<S>>;
-export type AsyncWorkflowOutput<S extends Stages> = HasAsyncOp<S> extends true
-    ? HasEitherOp<S> extends true
-        ? Promise<Either<EitherOpsLefts<S>, PromiseLikeArg<ReturnType<Last<S>>>>>
-        : ReturnType<Last<S>>
+    : HasOnlyValidStages<Stages> extends true
+    ? Stages
     : never;
+export type AsyncWorkflow<Stages extends StageList> = HasAsyncOperation<Stages> extends false
+    ? never
+    : HasOnlyValidStages<Stages> extends true
+    ? Stages
+    : never;
+
+export type WorkflowResult<Stages extends StageList> = HasAsyncOperation<Stages> extends true
+    ? never
+    : HasEitherOperation<Stages> extends true
+    ? Either<EitherOperationLefts<Stages>, WorkflowResultType<Stages>>
+    : WorkflowResultType<Stages>;
+export type AsyncWorkflowResult<Stages extends StageList> = HasAsyncOperation<Stages> extends false
+    ? never
+    : HasEitherOperation<Stages> extends true
+    ? Promise<Either<EitherOperationLefts<Stages>, WorkflowResultType<Stages>>>
+    : Promise<WorkflowResultType<Stages>>;
+
+type WorkflowResultType<Stages extends StageList> = UnwrapSuccessType<ReturnType<Last<Stages>>>;
 
 type IsValidStagePair<First extends Stage, Second extends Stage> = Equal<ReturnType<First>, StageInput<Second>> extends true
     ? true
-    : Equal<EitherOpRight<First>, StageInput<Second>>;
+    : Equal<EitherOperationRight<First>, StageInput<Second>>;
 
-type HasValidStages<S extends Stages> = TwoOrMoreElementsList<S> extends true
-    ? IsValidStagePair<First<S>, Second<S>> extends true
-        ? HasValidStages<Tail<S>>
+type HasOnlyValidStages<Stages extends StageList> = TwoOrMoreElementsList<Stages> extends true
+    ? IsValidStagePair<First<Stages>, Second<Stages>> extends true
+        ? HasOnlyValidStages<Tail<Stages>>
         : false
-    : OneElementList<S>;
+    : OneElementList<Stages>;
