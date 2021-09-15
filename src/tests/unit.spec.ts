@@ -1,5 +1,5 @@
 import { Left, Right } from "exceptionout";
-import { runAsyncWorkflow, runWorkflow } from "../domain-workflow";
+import { runAsyncWorkflow, runWorkflow } from "..";
 import {
     ValidAsyncWorkflow1,
     ValidAsyncWorkflow2,

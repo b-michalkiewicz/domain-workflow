@@ -1,5 +1,5 @@
 import { Left, Right } from "exceptionout";
-import { runAsyncWorkflow, runWorkflow } from "../domain-workflow";
+import { runAsyncWorkflow, runWorkflow } from "..";
 import { ValidAsyncWorkflow5, ValidWorkflow5 } from "./test-types";
 
 describe("runAsyncWorkflow", () => {

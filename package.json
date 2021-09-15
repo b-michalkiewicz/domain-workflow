@@ -1,8 +1,8 @@
 {
     "name": "domain-workflow",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "author": "Bartosz Michalkiewicz <bmichalkiewicz@gmail.com>",
-    "description": "explicit workflows with error handling made easy",
+    "description": "Human readable workflows with error handling made easy",
     "main": "dist/index.js",
     "typings": "dist/index.d.ts",
     "repository": "https://github.com/b-michalkiewicz/domain-workflow",
